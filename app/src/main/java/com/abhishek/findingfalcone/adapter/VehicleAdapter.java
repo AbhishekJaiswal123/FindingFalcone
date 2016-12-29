@@ -63,6 +63,8 @@ public class VehicleAdapter  extends RecyclerView.Adapter<VehicleAdapter.ViewHol
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+
+
        final Vehicle model = vehicles.get(position);
         holder.vehicle.setText(model.getVehicle_name());
         holder.vehicleCount.setText(String.valueOf(model.getTotal_number()));

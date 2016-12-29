@@ -75,50 +75,51 @@ public class HomeFragment extends Fragment implements HomeContract.FragmentView 
 
     @Override
     public void setData() {
-        AutoCompleteAdapter adapter = new AutoCompleteAdapter(getActivity(),parentActivity.mPlanetList);
-        autoCompleteTextView.setDropDownAnchor(R.id.autocomplete_planet_atv);
-        autoCompleteTextView.setThreshold(1);
-        autoCompleteTextView.setAdapter(adapter);
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Planet planet = (Planet) adapterView.getItemAtPosition(i);
-                mSelectedPlanet = planet;
-                autoCompleteTextView.setText(planet.getPlanet());
-                presenter.showVehicles(planet,parentActivity.mVehicleList);
+        try {
+            AutoCompleteAdapter adapter = new AutoCompleteAdapter(getActivity(), parentActivity.mPlanetList);
+            autoCompleteTextView.setDropDownAnchor(R.id.autocomplete_planet_atv);
+            autoCompleteTextView.setThreshold(1);
+            autoCompleteTextView.setAdapter(adapter);
+            autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Planet planet = (Planet) adapterView.getItemAtPosition(i);
+                    mSelectedPlanet = planet;
+                    autoCompleteTextView.setText(planet.getPlanet());
+                    presenter.showVehicles(planet, parentActivity.mVehicleList);
+                }
+            });
+
+            autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View arg0) {
+                    autoCompleteTextView.showDropDown();
+                }
+            });
+
+            vehicleList.setLayoutManager(new LinearLayoutManager(getActivity()));
+            vehicleAdapter = new VehicleAdapter(getActivity(), HomeFragment.this);
+            vehicleList.setAdapter(vehicleAdapter);
+            presenter.showVehiclesBasedOnCount(parentActivity.mVehicleList);
+
+            vehicleAdapter.setOnVehicleClickListener(new VehicleAdapter.onVehicleClickListener() {
+                @Override
+                public void onVehicleClick(Vehicle vehicle) {
+                    mSelectedVehicle = vehicle;
+                }
+            });
+
+            if (parentActivity.selectedPlanet.size() >= 3) {
+                nextBtn.setText("Find Falcone");
             }
-        });
 
-        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View arg0) {
-                autoCompleteTextView.showDropDown();
-            }
-        });
-
-        vehicleList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        vehicleAdapter = new VehicleAdapter(getActivity(),HomeFragment.this);
-        vehicleList.setAdapter(vehicleAdapter);
-        presenter.showVehiclesBasedOnCount(parentActivity.mVehicleList);
-
-        vehicleAdapter.setOnVehicleClickListener(new VehicleAdapter.onVehicleClickListener() {
-            @Override
-            public void onVehicleClick(Vehicle vehicle) {
-                mSelectedVehicle = vehicle;
-            }
-        });
-
-        if(parentActivity.selectedPlanet.size() >= 3){
-            nextBtn.setText("Find Falcone");
-        }
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            nextBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
                     if (mSelectedPlanet != null && mSelectedVehicle != null) {
                         mSelectedPlanet.setSelected(true);
-                        mSelectedVehicle.setTotal_number(mSelectedVehicle.getTotal_number()-1);
+                        mSelectedVehicle.setTotal_number(mSelectedVehicle.getTotal_number() - 1);
 
                         parentActivity.selectedPlanet.push(mSelectedPlanet);
                         parentActivity.selectedVehicle.push(mSelectedVehicle);
@@ -126,10 +127,10 @@ public class HomeFragment extends Fragment implements HomeContract.FragmentView 
 
                         if (parentActivity.selectedPlanet.size() >= 4) {
 
-                            presenter.findFalcone(parentActivity.selectedPlanet,parentActivity.selectedVehicle);
+                            presenter.findFalcone(parentActivity.selectedPlanet, parentActivity.selectedVehicle);
 
                         } else {
-                            if(mSelectedVehicle.getTotal_number() == 0){
+                            if (mSelectedVehicle.getTotal_number() == 0) {
                                 mSelectedVehicle.setEnable(false);
                             }
                             parentActivity.mPresenter.moveToNextStep();
@@ -137,8 +138,11 @@ public class HomeFragment extends Fragment implements HomeContract.FragmentView 
                     } else {
                         Toast.makeText(getActivity(), "Select planet/Vehicle from list", Toast.LENGTH_SHORT).show();
                     }
-            }
-        });
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

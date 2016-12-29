@@ -42,7 +42,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         timeTaken = (TextView)findViewById(R.id.time_take_id);
         playAgainBtn = (Button)findViewById(R.id.play_again_btn);
 
-
+        mPresenter = new ResultPresenter(ResultActivity.this);
         try {
             String data = getIntent().getStringExtra("result");
             mTime = getIntent().getStringExtra("time");
@@ -53,7 +53,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
 
         initToolbar();
         playAgainBtn.setOnClickListener(this);
-        mPresenter = new ResultPresenter(ResultActivity.this);
+
 
 
 
