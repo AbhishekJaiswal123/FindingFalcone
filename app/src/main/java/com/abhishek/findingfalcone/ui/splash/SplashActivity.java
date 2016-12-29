@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.abhishek.findingfalcone.R;
 
@@ -38,6 +39,12 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         mPresenter.navigateToHome(SplashActivity.this);
         finish();
 
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(SplashActivity.this,"Some error occured. Please try again",Toast.LENGTH_SHORT).show();
+        finish();
     }
 
 

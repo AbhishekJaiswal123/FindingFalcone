@@ -14,6 +14,7 @@ public interface SplashContract {
     interface View extends BaseView<Presenter>{
 
         void hideProgress();
+        void showError();
 
     }
 

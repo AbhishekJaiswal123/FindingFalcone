@@ -38,7 +38,7 @@ public class SplashPresenter implements SplashContract.Presenter{
 
             @Override
             public void onError() {
-
+                mSplashView.showError();
             }
         });
 
@@ -53,7 +53,7 @@ public class SplashPresenter implements SplashContract.Presenter{
 
             @Override
             public void onError() {
-
+                mSplashView.showError();
             }
         });
 
@@ -65,7 +65,7 @@ public class SplashPresenter implements SplashContract.Presenter{
 
             @Override
             public void onError() {
-
+                mSplashView.showError();
             }
         });
     }

@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment implements HomeContract.FragmentView 
         autoCompleteTextView = (AppCompatAutoCompleteTextView)view.findViewById(R.id.autocomplete_planet_atv);
         vehicleList = (RecyclerView)view.findViewById(R.id.vehicle_list_rv);
         nextBtn = (AppCompatButton)view.findViewById(R.id.next_btn);
+        parentActivity = (HomeActivity)getActivity();
         presenter.initData();
         return view;
     }
